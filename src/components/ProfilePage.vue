@@ -34,20 +34,29 @@
     </ul>
     <strong>Active Subscriptions:</strong>
     <ul>
-      <li v-for="subscription in currentUser.user.subscriptions" :key="subscription">
+      <li
+        v-for="subscription in currentUser.user.subscriptions"
+        :key="subscription"
+      >
         Subscription #{{ subscription.id }}:
-        <ul v-if="subscription.active" >
+        <ul v-if="subscription.active">
           <li>Start Date: {{ subscription.start_date }}</li>
           <li>End Date: {{ subscription.end_date }}</li>
-          <li>Package #{{ subscription.package.id }}: {{ subscription.package.name }}</li>
-          <li>Channels:
+          <li>
+            Package #{{ subscription.package.id }}:
+            {{ subscription.package.name }}
+          </li>
+          <li>
+            Channels:
             <ul>
-              <li v-for="channel in subscription.package.channels" :key="channel">
-                Channel #{{ channel.id }}: {{channel.name}}
+              <li
+                v-for="channel in subscription.package.channels"
+                :key="channel"
+              >
+                Channel #{{ channel.id }}: {{ channel.name }}
               </li>
             </ul>
           </li>
-
         </ul>
       </li>
     </ul>
