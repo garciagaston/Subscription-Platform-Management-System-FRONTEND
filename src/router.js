@@ -6,6 +6,10 @@ import RegisterPage from "./components/RegisterPage.vue";
 
 // lazy-loaded
 const ProfilePage = () => import("./components/ProfilePage.vue");
+const PackagesListPage = () => import("./components/PackagesListPage.vue");
+const PackagesViewPage = () => import("./components/PackagesViewPage.vue");
+const PackagesCreatePage = () => import("./components/PackagesCreatePage.vue");
+const PackagesEditPage = () => import("./components/PackagesEditPage.vue");
 
 const routes = [
   {
@@ -24,6 +28,22 @@ const routes = [
   {
     path: "/register",
     component: RegisterPage,
+  },
+  {
+    path: "/packages",
+    component: PackagesListPage,
+  },
+  {
+    path: "/packages/:id",
+    component: PackagesViewPage,
+  },
+  {
+    path: "/packages/create",
+    component: PackagesCreatePage,
+  },
+  {
+    path: "/packages/:id/edit",
+    component: PackagesEditPage,
   },
   {
     path: "/profile",
