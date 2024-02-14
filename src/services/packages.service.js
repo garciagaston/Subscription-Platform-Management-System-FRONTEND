@@ -29,6 +29,14 @@ class PackageService {
         return response.data;
       });
   }
+
+  async deletePackage(packageId) {
+    return axios
+      .delete(API_URL + "/" + packageId, { headers: authHeader() })
+      .then((response) => {
+        return response.data;
+      });
+  }
 }
 
 export default new PackageService();

@@ -133,45 +133,50 @@
                       <!-- TABLE BODY -->
                       <tbody>
                         <tr
-                          v-for="(packageItem, index) in packages.data"
-                          :key="packageItem"
+                          v-for="(packageDetail, index) in packages.data"
+                          :key="packageDetail"
                           :class="{
                             even: index % 2 === 0,
                             odd: index % 2 !== 0,
                           }"
                         >
                           <td>
-                            {{ packageItem.id }}
+                            {{ packageDetail.id }}
                           </td>
                           <td class="dtr-control sorting_1" tabindex="0">
-                            {{ packageItem.name }}
+                            {{ packageDetail.name }}
                           </td>
-                          <td>{{ packageItem.description }}</td>
-                          <td>{{ packageItem.sku }}</td>
-                          <td>{{ packageItem.active }}</td>
-                          <td>{{ packageItem.created_at }}</td>
-                          <td>{{ packageItem.updated_at }}</td>
+                          <td>{{ packageDetail.description }}</td>
+                          <td>{{ packageDetail.sku }}</td>
+                          <td>{{ packageDetail.active }}</td>
+                          <td>
+                            {{ moment.utc(packageDetail.created_at).fromNow() }}
+                          </td>
+                          <td>
+                            {{ moment.utc(packageDetail.updated_at).fromNow() }}
+                          </td>
                           <td>
                             <router-link
                               v-if="UserService.can('view any packages')"
-                              :to="'/packages/' + packageItem.id"
+                              :to="'/packages/' + packageDetail.id"
                               class="btn btn-secondary btn-flat mr-1"
                               >View</router-link
                             >
                             <router-link
                               v-if="UserService.can('edit packages')"
-                              :to="'/packages/' + packageItem.id + '/edit'"
+                              :to="'/packages/' + packageDetail.id + '/edit'"
                               class="btn btn-secondary btn-flat mr-1"
                             >
                               Edit
                             </router-link>
-                            <router-link
+                            <button
                               v-if="UserService.can('delete packages')"
-                              :to="'/packages/' + packageItem.id"
+                              type="button"
+                              @click="deletePackage(packageDetail.id)"
                               class="btn btn-danger btn-flat"
                             >
                               Delete
-                            </router-link>
+                            </button>
                           </td>
                         </tr>
                       </tbody>
@@ -311,6 +316,8 @@
 import PackageService from "../services/packages.service.js";
 import UserService from "../services/user.service.js";
 import { useRoute } from "vue-router";
+import moment from "moment";
+
 const PER_PAGE_DEFAULT = 20;
 const PAGE_DEFAULT = 1;
 
@@ -325,6 +332,7 @@ export default {
       PAGE_DEFAULT: PAGE_DEFAULT,
       PER_PAGE_DEFAULT: PER_PAGE_DEFAULT,
       UserService: UserService,
+      moment: moment,
     };
   },
   computed: {
@@ -337,7 +345,9 @@ export default {
       if (perPage !== null && perPage !== undefined) {
         this.perPage = perPage;
       }
-      this.page = page;
+      if (page !== null && page !== undefined) {
+        page = this.page;
+      }
       this.$router.push({
         path: this.$route.path,
         query: { page: page, per_page: perPage },
@@ -347,6 +357,14 @@ export default {
         thiss.packages = response;
       });
       return thiss.packages;
+    },
+    deletePackage(packageId) {
+      let thiss = this;
+      if(confirm("Do you really want to delete package #" + packageId +"?")){
+        PackageService.deletePackage(packageId).then(function () {
+          thiss.getAllPackages(thiss.page, thiss.perPage);
+        });
+      }
     },
   },
   mounted() {
