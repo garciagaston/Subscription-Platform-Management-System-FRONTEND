@@ -107,9 +107,10 @@ export default {
   props: {
     packageDetail: {
       type: Object,
-      
+      default: () => ({}),
     },
   },
+  emits: ["on-submit"],
   data() {
     const schema = yup.object().shape({
       name: yup

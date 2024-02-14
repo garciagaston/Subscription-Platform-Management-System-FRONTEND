@@ -42,15 +42,30 @@
                   </p>
                   <p class="text-sm">
                     created_at
-                    <b class="d-block">{{ moment.utc(packageDetail.created_at).local().format('YYYY-MM-DD HH:mm:ss') }}</b>
+                    <b class="d-block">{{
+                      moment
+                        .utc(packageDetail.created_at)
+                        .local()
+                        .format("YYYY-MM-DD HH:mm:ss")
+                    }}</b>
                   </p>
                   <p class="text-sm">
                     updated_at
-                    <b class="d-block">{{ moment.utc(packageDetail.updated_at).local().format('YYYY-MM-DD HH:mm:ss') }}</b>
+                    <b class="d-block">{{
+                      moment
+                        .utc(packageDetail.updated_at)
+                        .local()
+                        .format("YYYY-MM-DD HH:mm:ss")
+                    }}</b>
                   </p>
                   <p v-if="packageDetail.deleted_at" class="text-sm">
                     deleted_at
-                    <b class="d-block">{{ moment.utc(packageDetail.deleted_at).local().format('YYYY-MM-DD HH:mm:ss') }}</b>
+                    <b class="d-block">{{
+                      moment
+                        .utc(packageDetail.deleted_at)
+                        .local()
+                        .format("YYYY-MM-DD HH:mm:ss")
+                    }}</b>
                   </p>
                 </div>
               </div>

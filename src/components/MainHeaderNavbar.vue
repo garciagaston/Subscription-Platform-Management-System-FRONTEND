@@ -47,25 +47,37 @@
               <p>Login</p>
             </router-link>
           </li>
-          <li v-if="currentUser && UserService.can('view any packages')" class="nav-item">
+          <li
+            v-if="currentUser && UserService.can('view any packages')"
+            class="nav-item"
+          >
             <router-link to="/packages" class="nav-link">
               <i class="nav-icon fas fa-cubes"></i>
               <p>Packages</p>
             </router-link>
           </li>
-          <li v-if="currentUser && UserService.can('view any packages')" class="nav-item">
+          <li
+            v-if="currentUser && UserService.can('view any packages')"
+            class="nav-item"
+          >
             <router-link to="/channels" class="nav-link">
               <i class="nav-icon fas fa-cube"></i>
               <p>Channels</p>
             </router-link>
           </li>
-          <li v-if="currentUser && UserService.can('view any packages')" class="nav-item">
+          <li
+            v-if="currentUser && UserService.can('view any packages')"
+            class="nav-item"
+          >
             <router-link to="/subscriptions" class="nav-link">
               <i class="nav-icon fas fa-tv"></i>
               <p>Subscriptions</p>
             </router-link>
           </li>
-          <li v-if="currentUser && UserService.can('view any packages')" class="nav-item">
+          <li
+            v-if="currentUser && UserService.can('view any packages')"
+            class="nav-item"
+          >
             <router-link to="/users" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>Users</p>
