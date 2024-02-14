@@ -21,13 +21,13 @@
 import MainHeaderNavbar from "./components/MainHeaderNavbar.vue";
 
 export default {
+  components: {
+    MainHeaderNavbar,
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
     },
-  },
-  components: {
-    MainHeaderNavbar,
   },
   methods: {
     logOut() {

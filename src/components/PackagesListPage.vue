@@ -18,7 +18,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <div class="card" v-if="packages.data">
+          <div v-if="packages.data" class="card">
             <div class="card-body">
               <div class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
@@ -172,8 +172,8 @@
                             <button
                               v-if="UserService.can('delete packages')"
                               type="button"
-                              @click="deletePackage(packageDetail.id)"
                               class="btn btn-danger btn-flat"
+                              @click="deletePackage(packageDetail.id)"
                             >
                               Delete
                             </button>
@@ -185,8 +185,8 @@
                       <!-- TABLE SHOWING -->
                       <div class="col-sm-12 col-md-5">
                         <div
-                          class="dataTables_info"
                           id="example2_info"
+                          class="dataTables_info"
                           role="status"
                           aria-live="polite"
                         >
@@ -198,32 +198,32 @@
                       <!-- TABLE PAGINATION -->
                       <div class="col-sm-12 col-md-5">
                         <div
-                          class="dataTables_paginate paging_simple_numbers"
                           id="datatable_paginate"
+                          class="dataTables_paginate paging_simple_numbers"
                         >
                           <ul class="pagination">
                             <li
+                              id="datatable_previous"
                               class="paginate_button page-item previous"
-                              v-bind:class="{
+                              :class="{
                                 disabled: packages.links.prev === null,
                               }"
-                              id="datatable_previous"
                             >
                               <button
                                 type="button"
-                                @click="
-                                  getAllPackages(
-                                    packages.meta.current_page - 1,
-                                    perPage,
-                                  )
-                                "
-                                v-bind:class="{
+                                :class="{
                                   disabled: packages.links.prev === null,
                                 }"
                                 aria-controls="datatable"
                                 :data-dt-idx="packages.meta.current_page - 1"
                                 :tabindex="packages.meta.current_page - 1"
                                 class="page-link"
+                                @click="
+                                  getAllPackages(
+                                    packages.meta.current_page - 1,
+                                    perPage,
+                                  )
+                                "
                               >
                                 Previous
                               </button>
@@ -232,43 +232,43 @@
                               v-for="index in packages.meta.last_page"
                               :key="index"
                               class="paginate_button page-item"
-                              v-bind:class="{
+                              :class="{
                                 active: index == packages.meta.current_page,
                               }"
                             >
                               <button
                                 type="button"
-                                @click="getAllPackages(index, perPage)"
                                 aria-controls="datatable"
                                 :data-dt-idx="index"
                                 :tabindex="index"
                                 class="page-link"
+                                @click="getAllPackages(index, perPage)"
                               >
                                 {{ index }}
                               </button>
                             </li>
                             <li
+                              id="datatable_next"
                               class="paginate_button page-item next"
-                              v-bind:class="{
+                              :class="{
                                 disabled: packages.links.next === null,
                               }"
-                              id="datatable_next"
                             >
                               <button
                                 type="button"
-                                @click="
-                                  getAllPackages(
-                                    packages.meta.current_page + 1,
-                                    perPage,
-                                  )
-                                "
-                                v-bind:class="{
+                                :class="{
                                   disabled: packages.links.next === null,
                                 }"
                                 aria-controls="pagination"
                                 :data-dt-idx="packages.meta.current_page + 1"
                                 :tabindex="packages.meta.current_page + 1"
                                 class="page-link"
+                                @click="
+                                  getAllPackages(
+                                    packages.meta.current_page + 1,
+                                    perPage,
+                                  )
+                                "
                               >
                                 Next
                               </button>
@@ -340,14 +340,17 @@ export default {
       return this.$store.state.auth.user;
     },
   },
+  mounted() {
+    if (!this.currentUser || !UserService.can("view any packages")) {
+      this.$router.push("/login");
+    }
+    const route = useRoute();
+    this.perPage = route.query.per_page ?? PER_PAGE_DEFAULT;
+    this.page = route.query.page ?? PAGE_DEFAULT;
+    this.getAllPackages(this.page, this.perPage);
+  },
   methods: {
     getAllPackages(page, perPage) {
-      if (perPage !== null && perPage !== undefined) {
-        this.perPage = perPage;
-      }
-      if (page !== null && page !== undefined) {
-        page = this.page;
-      }
       this.$router.push({
         path: this.$route.path,
         query: { page: page, per_page: perPage },
@@ -360,21 +363,12 @@ export default {
     },
     deletePackage(packageId) {
       let thiss = this;
-      if(confirm("Do you really want to delete package #" + packageId +"?")){
+      if (confirm("Do you really want to delete package #" + packageId + "?")) {
         PackageService.deletePackage(packageId).then(function () {
           thiss.getAllPackages(thiss.page, thiss.perPage);
         });
       }
     },
-  },
-  mounted() {
-    if (!this.currentUser || !UserService.can("view any packages")) {
-      this.$router.push("/login");
-    }
-    const route = useRoute();
-    this.perPage = route.query.per_page ?? PER_PAGE_DEFAULT;
-    this.page = route.query.page ?? PAGE_DEFAULT;
-    this.getAllPackages(this.page, this.perPage);
   },
 };
 </script>

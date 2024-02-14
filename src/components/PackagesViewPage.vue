@@ -42,15 +42,15 @@
                   </p>
                   <p class="text-sm">
                     created_at
-                    <b class="d-block">{{ packageDetail.created_at }}</b>
+                    <b class="d-block">{{ moment.utc(packageDetail.created_at).local().format('YYYY-MM-DD HH:mm:ss') }}</b>
                   </p>
                   <p class="text-sm">
                     updated_at
-                    <b class="d-block">{{ packageDetail.updated_at }}</b>
+                    <b class="d-block">{{ moment.utc(packageDetail.updated_at).local().format('YYYY-MM-DD HH:mm:ss') }}</b>
                   </p>
                   <p v-if="packageDetail.deleted_at" class="text-sm">
                     deleted_at
-                    <b class="d-block">{{ packageDetail.deleted_at }}</b>
+                    <b class="d-block">{{ moment.utc(packageDetail.deleted_at).local().format('YYYY-MM-DD HH:mm:ss') }}</b>
                   </p>
                 </div>
               </div>
@@ -79,6 +79,7 @@
 <script>
 import PackageService from "../services/packages.service.js";
 import UserService from "../services/user.service.js";
+import moment from "moment";
 
 export default {
   name: "PackagesViewPage",
@@ -87,12 +88,19 @@ export default {
       packageDetail: null,
       packageId: this.$route.params.id,
       UserService: UserService,
+      moment: moment,
     };
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
     },
+  },
+  mounted() {
+    if (!this.currentUser || !UserService.can("view packages")) {
+      this.$router.push("/login");
+    }
+    this.getPackage(this.packageId);
   },
   methods: {
     getPackage(packageId) {
@@ -102,12 +110,6 @@ export default {
       });
       return thiss.packageDetail;
     },
-  },
-  mounted() {
-    if (!this.currentUser || !UserService.can("view packages")) {
-      this.$router.push("/login");
-    }
-    this.getPackage(this.packageId);
   },
 };
 </script>

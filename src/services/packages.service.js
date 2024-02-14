@@ -22,6 +22,14 @@ class PackageService {
       });
   }
 
+  async createPackage(packageData) {
+    return axios
+      .post(API_URL, packageData, { headers: authHeader() })
+      .then((response) => {
+        return response.data;
+      });
+  }
+
   async editPackage(packageId, packageData) {
     return axios
       .put(API_URL + "/" + packageId, packageData, { headers: authHeader() })
