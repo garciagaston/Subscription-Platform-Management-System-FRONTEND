@@ -1,6 +1,6 @@
 <template>
   <div class="content-header">
-    <h1>Package Detail</h1>
+    <h1>Channel Detail</h1>
   </div>
   <div class="content px-2">
     <div class="container-fluid">
@@ -9,42 +9,50 @@
           <div class="card">
             <div class="card-body">
               <div
-                v-if="packageDetail"
+                v-if="channelDetail"
                 class="col-12 col-md-12 col-lg-4 order-1 order-md-2"
               >
                 <h3 class="text-primary">
-                  <i class="fas fa-cubes"></i> {{ packageDetail.name }}
+                  <i class="fas fa-cube"></i> {{ channelDetail.name }}
                 </h3>
                 <p class="text-muted">
-                  {{ packageDetail.description }}
+                  {{ channelDetail.description }}
                 </p>
                 <br />
                 <div class="text-muted">
                   <p class="text-sm">
                     Name
-                    <b class="d-block">{{ packageDetail.name }}</b>
+                    <b class="d-block">{{ channelDetail.name }}</b>
                   </p>
                   <p class="text-sm">
                     Description
-                    <b class="d-block">{{ packageDetail.description }}</b>
-                  </p>
-                  <p class="text-sm">
-                    SKU
-                    <b class="d-block">{{ packageDetail.sku }}</b>
+                    <b class="d-block">{{ channelDetail.description }}</b>
                   </p>
                   <p class="text-sm">
                     image_url
-                    <b class="d-block">{{ packageDetail.image_url }}</b>
+                    <b class="d-block">{{ channelDetail.image_url }}</b>
+                  </p>
+                  <p class="text-sm">
+                    lineup_id
+                    <b class="d-block">{{ channelDetail.lineup_id }}</b>
+                  </p>
+                  <p class="text-sm">
+                    call_sign
+                    <b class="d-block">{{ channelDetail.call_sign }}</b>
                   </p>
                   <p class="text-sm">
                     active
-                    <b class="d-block">{{ packageDetail.active }}</b>
+                    <b class="d-block">{{ channelDetail.active }}</b>
+                  </p>
+                  <p class="text-sm">
+                    display_order
+                    <b class="d-block">{{ channelDetail.display_order }}</b>
                   </p>
                   <p class="text-sm">
                     created_at
                     <b class="d-block">{{
                       moment
-                        .utc(packageDetail.created_at)
+                        .utc(channelDetail.created_at)
                         .local()
                         .format("YYYY-MM-DD HH:mm:ss")
                     }}</b>
@@ -53,16 +61,16 @@
                     updated_at
                     <b class="d-block">{{
                       moment
-                        .utc(packageDetail.updated_at)
+                        .utc(channelDetail.updated_at)
                         .local()
                         .format("YYYY-MM-DD HH:mm:ss")
                     }}</b>
                   </p>
-                  <p v-if="packageDetail.deleted_at" class="text-sm">
+                  <p v-if="channelDetail.deleted_at" class="text-sm">
                     deleted_at
                     <b class="d-block">{{
                       moment
-                        .utc(packageDetail.deleted_at)
+                        .utc(channelDetail.deleted_at)
                         .local()
                         .format("YYYY-MM-DD HH:mm:ss")
                     }}</b>
@@ -72,14 +80,14 @@
             </div>
             <div class="card-footer clearfix">
               <router-link
-                v-if="UserService.can('edit packages')"
-                :to="'/packages/' + packageId + '/edit'"
+                v-if="UserService.can('edit channels')"
+                :to="'/channels/' + channelId + '/edit'"
                 class="btn btn-primary float-right"
-                ><i class="fas fa-pencil"></i> Edit Package</router-link
+                ><i class="fas fa-pencil"></i> Edit Channel</router-link
               >
               <router-link
-                v-if="UserService.can('view any packages')"
-                to="/packages"
+                v-if="UserService.can('view any channels')"
+                to="/channels"
                 class="btn btn-text float-right"
                 ><i class="fas fa-pencil"></i> Back</router-link
               >
@@ -92,16 +100,16 @@
 </template>
 
 <script>
-import PackageService from "../services/packages.service.js";
+import ChannelService from "../services/channels.service.js";
 import UserService from "../services/user.service.js";
 import moment from "moment";
 
 export default {
-  name: "PackagesViewPage",
+  name: "ChannelsViewPage",
   data() {
     return {
-      packageDetail: null,
-      packageId: this.$route.params.id,
+      channelDetail: null,
+      channelId: this.$route.params.id,
       UserService: UserService,
       moment: moment,
     };
@@ -112,18 +120,18 @@ export default {
     },
   },
   mounted() {
-    if (!this.currentUser || !UserService.can("view packages")) {
+    if (!this.currentUser || !UserService.can("view channels")) {
       this.$router.push("/login");
     }
-    this.getPackage(this.packageId);
+    this.getChannel(this.channelId);
   },
   methods: {
-    getPackage(packageId) {
+    getChannel(channelId) {
       let thiss = this;
-      PackageService.getPackage(packageId).then(function (response) {
-        thiss.packageDetail = response.data;
+      ChannelService.getChannel(channelId).then(function (response) {
+        thiss.channelDetail = response.data;
       });
-      return thiss.packageDetail;
+      return thiss.channelDetail;
     },
   },
 };

@@ -6,10 +6,19 @@ import RegisterPage from "./components/RegisterPage.vue";
 
 // lazy-loaded
 const ProfilePage = () => import("./components/ProfilePage.vue");
+
+//packages
 const PackagesListPage = () => import("./components/PackagesListPage.vue");
 const PackagesViewPage = () => import("./components/PackagesViewPage.vue");
 const PackagesCreatePage = () => import("./components/PackagesCreatePage.vue");
 const PackagesEditPage = () => import("./components/PackagesEditPage.vue");
+
+//channels
+const ChannelsListPage = () => import("./components/ChannelsListPage.vue");
+const ChannelsViewPage = () => import("./components/ChannelsViewPage.vue");
+const ChannelsCreatePage = () => import("./components/ChannelsCreatePage.vue");
+const ChannelsEditPage = () => import("./components/ChannelsEditPage.vue");
+
 
 const routes = [
   {
@@ -29,6 +38,7 @@ const routes = [
     path: "/register",
     component: RegisterPage,
   },
+  // packages
   {
     path: "/packages",
     component: PackagesListPage,
@@ -45,6 +55,24 @@ const routes = [
     path: "/packages/:id/edit",
     component: PackagesEditPage,
   },
+    // channels
+    {
+      path: "/channels",
+      component: ChannelsListPage,
+    },
+    {
+      path: "/channels/:id",
+      component: ChannelsViewPage,
+    },
+    {
+      path: "/channels/create",
+      component: ChannelsCreatePage,
+    },
+    {
+      path: "/channels/:id/edit",
+      component: ChannelsEditPage,
+    },
+    // profiles
   {
     path: "/profile",
     name: "profile",

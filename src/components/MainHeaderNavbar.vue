@@ -57,7 +57,7 @@
             </router-link>
           </li>
           <li
-            v-if="currentUser && UserService.can('view any packages')"
+            v-if="currentUser && UserService.can('view any channels')"
             class="nav-item"
           >
             <router-link to="/channels" class="nav-link">
@@ -66,7 +66,7 @@
             </router-link>
           </li>
           <li
-            v-if="currentUser && UserService.can('view any packages')"
+            v-if="currentUser && UserService.can('view any subscriptions')"
             class="nav-item"
           >
             <router-link to="/subscriptions" class="nav-link">
@@ -75,7 +75,7 @@
             </router-link>
           </li>
           <li
-            v-if="currentUser && UserService.can('view any packages')"
+            v-if="currentUser && UserService.can('view any users')"
             class="nav-item"
           >
             <router-link to="/users" class="nav-link">

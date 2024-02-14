@@ -2,14 +2,14 @@
   <div class="content-header">
     <div class="row">
       <div class="col-6">
-        <h1>Packages</h1>
+        <h1>Channels</h1>
       </div>
       <div class="col-6">
         <router-link
-          v-if="UserService.can('create packages')"
-          to="/packages/create"
+          v-if="UserService.can('create channels')"
+          to="/channels/create"
           class="btn btn-primary btn-flat float-right"
-          >Create package</router-link
+          >Create channel</router-link
         >
       </div>
     </div>
@@ -18,26 +18,10 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <div v-if="packages.data" class="card">
+          <div v-if="channels.data" class="card">
             <div class="card-body">
               <div class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
-                  <!-- <div class="col-sm-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <select class="custom-select">
-                          <option value="name">Name</option>
-                          <option value="sku">SKU</option>
-                        </select>
-                      </div>
-                      <input type="text" class="form-control" />
-                      <span class="input-group-append">
-                        <button type="button" class="btn btn-info btn-flat">
-                          Search
-                        </button>
-                      </span>
-                    </div>
-                  </div> -->
                   <div class="col-sm-12">
                     <!-- TABLE -->
                     <table
@@ -49,7 +33,7 @@
                           <th
                             class="sorting sorting_asc"
                             tabindex="0"
-                            aria-controls="packages"
+                            aria-controls="channels"
                             rowspan="1"
                             colspan="1"
                             aria-sort="ascending"
@@ -60,7 +44,7 @@
                           <th
                             class="sorting sorting_asc"
                             tabindex="0"
-                            aria-controls="packages"
+                            aria-controls="channels"
                             rowspan="1"
                             colspan="1"
                             aria-sort="ascending"
@@ -71,7 +55,7 @@
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="packages"
+                            aria-controls="channels"
                             rowspan="1"
                             colspan="1"
                             aria-label="Browser: activate to sort column ascending"
@@ -81,17 +65,27 @@
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="packages"
+                            aria-controls="channels"
                             rowspan="1"
                             colspan="1"
                             aria-label="Platform(s): activate to sort column ascending"
                           >
-                            SKU
+                            Lineup Id
                           </th>
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="packages"
+                            aria-controls="channels"
+                            rowspan="1"
+                            colspan="1"
+                            aria-label="Platform(s): activate to sort column ascending"
+                          >
+                            Call Sign
+                          </th>
+                          <th
+                            class="sorting"
+                            tabindex="0"
+                            aria-controls="channels"
                             rowspan="1"
                             colspan="1"
                             aria-label="CSS grade: activate to sort column ascending"
@@ -101,7 +95,17 @@
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="packages"
+                            aria-controls="channels"
+                            rowspan="1"
+                            colspan="1"
+                            aria-label="CSS grade: activate to sort column ascending"
+                          >
+                            Display Order
+                          </th>
+                          <th
+                            class="sorting"
+                            tabindex="0"
+                            aria-controls="channels"
                             rowspan="1"
                             colspan="1"
                             aria-label="CSS grade: activate to sort column ascending"
@@ -111,7 +115,7 @@
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="packages"
+                            aria-controls="channels"
                             rowspan="1"
                             colspan="1"
                             aria-label="CSS grade: activate to sort column ascending"
@@ -121,7 +125,7 @@
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="packages"
+                            aria-controls="channels"
                             rowspan="1"
                             colspan="1"
                             aria-label="CSS grade: activate to sort column ascending"
@@ -133,47 +137,49 @@
                       <!-- TABLE BODY -->
                       <tbody>
                         <tr
-                          v-for="(packageDetail, index) in packages.data"
-                          :key="packageDetail"
+                          v-for="(channelDetail, index) in channels.data"
+                          :key="channelDetail"
                           :class="{
                             even: index % 2 === 0,
                             odd: index % 2 !== 0,
                           }"
                         >
                           <td>
-                            {{ packageDetail.id }}
+                            {{ channelDetail.id }}
                           </td>
                           <td class="dtr-control sorting_1" tabindex="0">
-                            {{ packageDetail.name }}
+                            {{ channelDetail.name }}
                           </td>
-                          <td>{{ packageDetail.description }}</td>
-                          <td>{{ packageDetail.sku }}</td>
-                          <td>{{ packageDetail.active }}</td>
+                          <td>{{ channelDetail.description }}</td>
+                          <td>{{ channelDetail.lineup_id }}</td>
+                          <td>{{ channelDetail.call_sign }}</td>
+                          <td>{{ channelDetail.active }}</td>
+                          <td>{{ channelDetail.display_order }}</td>
                           <td>
-                            {{ moment.utc(packageDetail.created_at).fromNow() }}
+                            {{ moment.utc(channelDetail.created_at).fromNow() }}
                           </td>
                           <td>
-                            {{ moment.utc(packageDetail.updated_at).fromNow() }}
+                            {{ moment.utc(channelDetail.updated_at).fromNow() }}
                           </td>
                           <td>
                             <router-link
-                              v-if="UserService.can('view any packages')"
-                              :to="'/packages/' + packageDetail.id"
+                              v-if="UserService.can('view any channels')"
+                              :to="'/channels/' + channelDetail.id"
                               class="btn btn-secondary btn-flat mr-1"
                               >View</router-link
                             >
                             <router-link
-                              v-if="UserService.can('edit packages')"
-                              :to="'/packages/' + packageDetail.id + '/edit'"
+                              v-if="UserService.can('edit channels')"
+                              :to="'/channels/' + channelDetail.id + '/edit'"
                               class="btn btn-secondary btn-flat mr-1"
                             >
                               Edit
                             </router-link>
                             <button
-                              v-if="UserService.can('delete packages')"
+                              v-if="UserService.can('delete channels')"
                               type="button"
                               class="btn btn-danger btn-flat"
-                              @click="deletePackage(packageDetail.id)"
+                              @click="deleteChannel(channelDetail.id)"
                             >
                               Delete
                             </button>
@@ -190,9 +196,9 @@
                           role="status"
                           aria-live="polite"
                         >
-                          Showing {{ packages.meta.from }} to
-                          {{ packages.meta.to }} of
-                          {{ packages.meta.total }} entries
+                          Showing {{ channels.meta.from }} to
+                          {{ channels.meta.to }} of
+                          {{ channels.meta.total }} entries
                         </div>
                       </div>
                       <!-- TABLE PAGINATION -->
@@ -206,21 +212,21 @@
                               id="datatable_previous"
                               class="paginate_button page-item previous"
                               :class="{
-                                disabled: packages.links.prev === null,
+                                disabled: channels.links.prev === null,
                               }"
                             >
                               <button
                                 type="button"
                                 :class="{
-                                  disabled: packages.links.prev === null,
+                                  disabled: channels.links.prev === null,
                                 }"
                                 aria-controls="datatable"
-                                :data-dt-idx="packages.meta.current_page - 1"
-                                :tabindex="packages.meta.current_page - 1"
+                                :data-dt-idx="channels.meta.current_page - 1"
+                                :tabindex="channels.meta.current_page - 1"
                                 class="page-link"
                                 @click="
-                                  getAllPackages(
-                                    packages.meta.current_page - 1,
+                                  getAllChannels(
+                                    channels.meta.current_page - 1,
                                     perPage,
                                   )
                                 "
@@ -229,11 +235,11 @@
                               </button>
                             </li>
                             <li
-                              v-for="index in packages.meta.last_page"
+                              v-for="index in channels.meta.last_page"
                               :key="index"
                               class="paginate_button page-item"
                               :class="{
-                                active: index == packages.meta.current_page,
+                                active: index == channels.meta.current_page,
                               }"
                             >
                               <button
@@ -242,7 +248,7 @@
                                 :data-dt-idx="index"
                                 :tabindex="index"
                                 class="page-link"
-                                @click="getAllPackages(index, perPage)"
+                                @click="getAllChannels(index, perPage)"
                               >
                                 {{ index }}
                               </button>
@@ -251,21 +257,21 @@
                               id="datatable_next"
                               class="paginate_button page-item next"
                               :class="{
-                                disabled: packages.links.next === null,
+                                disabled: channels.links.next === null,
                               }"
                             >
                               <button
                                 type="button"
                                 :class="{
-                                  disabled: packages.links.next === null,
+                                  disabled: channels.links.next === null,
                                 }"
                                 aria-controls="pagination"
-                                :data-dt-idx="packages.meta.current_page + 1"
-                                :tabindex="packages.meta.current_page + 1"
+                                :data-dt-idx="channels.meta.current_page + 1"
+                                :tabindex="channels.meta.current_page + 1"
                                 class="page-link"
                                 @click="
-                                  getAllPackages(
-                                    packages.meta.current_page + 1,
+                                  getAllChannels(
+                                    channels.meta.current_page + 1,
                                     perPage,
                                   )
                                 "
@@ -285,7 +291,7 @@
                             aria-controls="pagination"
                             class="form-select form-select-sm"
                             @change="
-                              getAllPackages(PAGE_DEFAULT, $event.target.value)
+                              getAllChannels(PAGE_DEFAULT, $event.target.value)
                             "
                           >
                             <option
@@ -313,7 +319,7 @@
 </template>
 
 <script>
-import PackageService from "../services/packages.service.js";
+import ChannelService from "../services/channels.service.js";
 import UserService from "../services/user.service.js";
 import { useRoute } from "vue-router";
 import moment from "moment";
@@ -322,10 +328,10 @@ const PER_PAGE_DEFAULT = 20;
 const PAGE_DEFAULT = 1;
 
 export default {
-  name: "PackagesListPage",
+  name: "ChannelsListPage",
   data() {
     return {
-      packages: [],
+      channels: [],
       perPage: PER_PAGE_DEFAULT,
       page: PAGE_DEFAULT,
       perPages: [10, 20, 40, 100],
@@ -341,16 +347,16 @@ export default {
     },
   },
   mounted() {
-    if (!this.currentUser || !UserService.can("view any packages")) {
+    if (!this.currentUser || !UserService.can("view any channels")) {
       this.$router.push("/login");
     }
     const route = useRoute();
     this.perPage = route.query.per_page ?? PER_PAGE_DEFAULT;
     this.page = route.query.page ?? PAGE_DEFAULT;
-    this.getAllPackages(this.page, this.perPage);
+    this.getAllChannels(this.page, this.perPage);
   },
   methods: {
-    getAllPackages(page, perPage) {
+    getAllChannels(page, perPage) {
       this.$router.push({
         path: this.$route.path,
         query: { page: page, per_page: perPage },
@@ -358,16 +364,16 @@ export default {
       this.page = page;
       this.perPage = perPage;
       let thiss = this;
-      PackageService.getAll(page, perPage).then(function (response) {
-        thiss.packages = response;
+      ChannelService.getAll(page, perPage).then(function (response) {
+        thiss.channels = response;
       });
-      return thiss.packages;
+      return thiss.channels;
     },
-    deletePackage(packageId) {
+    deleteChannel(channelId) {
       let thiss = this;
-      if (confirm("Do you really want to delete package #" + packageId + "?")) {
-        PackageService.deletePackage(packageId).then(function () {
-          thiss.getAllPackages(thiss.page, thiss.perPage);
+      if (confirm("Do you really want to delete channel #" + channelId + "?")) {
+        ChannelService.deleteChannel(channelId).then(function () {
+          thiss.getAllChannels(thiss.page, thiss.perPage);
         });
       }
     },
