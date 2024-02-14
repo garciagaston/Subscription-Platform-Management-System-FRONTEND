@@ -28,7 +28,7 @@
                     v-show="loading"
                     class="spinner-border spinner-border-sm"
                   />
-                  Sign Up
+                  Create account
                 </button>
               </div>
             </div>
@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
+      return this.$store?.state.auth.status.loggedIn;
     },
   },
   mounted() {

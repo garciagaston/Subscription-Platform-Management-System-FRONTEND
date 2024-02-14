@@ -63,7 +63,7 @@ export default {
   name: "ProfilePage",
   computed: {
     currentUser() {
-      return this.$store.state.auth.user;
+      return this.$store?.state.auth.user;
     },
   },
   mounted() {

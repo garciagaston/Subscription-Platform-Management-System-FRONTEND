@@ -18,7 +18,7 @@
           to="/login"
           class="btn btn-outline-secondary btn-lg px-4 rounded-pill"
         >
-          Log In
+          Login
         </router-link>
       </div>
     </div>
@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     currentUser() {
-      return this.$store.state.auth.user;
+      return this.$store?.state.auth.user;
     },
   },
 };
