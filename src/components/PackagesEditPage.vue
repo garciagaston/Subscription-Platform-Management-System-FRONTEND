@@ -42,7 +42,7 @@ export default {
     },
   },
   mounted() {
-    if (!this.currentUser) {
+    if (!this.currentUser || !UserService.can("edit packages")) {
       this.$router.push("/login");
     }
     this.getPackage(this.$route.params.id);

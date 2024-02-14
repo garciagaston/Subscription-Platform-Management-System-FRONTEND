@@ -38,7 +38,7 @@ export default {
     },
   },
   mounted() {
-    if (!this.currentUser) {
+    if (!this.currentUser || !UserService.can("create packages")) {
       this.$router.push("/login");
     }
   },
