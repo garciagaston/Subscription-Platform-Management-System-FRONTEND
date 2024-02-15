@@ -146,9 +146,7 @@ export default {
         .string()
         .required("Description is required!")
         .max(250, "Must be maximum 255 characters!"),
-      lineup_id: yup
-        .number()
-        .required("lineup_id is required!"),
+      lineup_id: yup.number().required("lineup_id is required!"),
       call_sign: yup
         .string()
         .required("call_sign is required!")
@@ -158,9 +156,7 @@ export default {
         .url()
         .required("Image URL is required!")
         .max(255, "Must be maximum 255 characters!"),
-      display_order: yup
-        .number()
-        .required("Display Order is required!"),
+      display_order: yup.number().required("Display Order is required!"),
       active: yup.bool(),
     });
     return {

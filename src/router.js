@@ -19,6 +19,15 @@ const ChannelsViewPage = () => import("./components/ChannelsViewPage.vue");
 const ChannelsCreatePage = () => import("./components/ChannelsCreatePage.vue");
 const ChannelsEditPage = () => import("./components/ChannelsEditPage.vue");
 
+//subscriptions
+const SubscriptionsListPage = () =>
+  import("./components/SubscriptionsListPage.vue");
+const SubscriptionsViewPage = () =>
+  import("./components/SubscriptionsViewPage.vue");
+const SubscriptionsCreatePage = () =>
+  import("./components/SubscriptionsCreatePage.vue");
+const SubscriptionsEditPage = () =>
+  import("./components/SubscriptionsEditPage.vue");
 
 const routes = [
   {
@@ -55,24 +64,41 @@ const routes = [
     path: "/packages/:id/edit",
     component: PackagesEditPage,
   },
-    // channels
-    {
-      path: "/channels",
-      component: ChannelsListPage,
-    },
-    {
-      path: "/channels/:id",
-      component: ChannelsViewPage,
-    },
-    {
-      path: "/channels/create",
-      component: ChannelsCreatePage,
-    },
-    {
-      path: "/channels/:id/edit",
-      component: ChannelsEditPage,
-    },
-    // profiles
+  // channels
+  {
+    path: "/channels",
+    component: ChannelsListPage,
+  },
+  {
+    path: "/channels/:id",
+    component: ChannelsViewPage,
+  },
+  {
+    path: "/channels/create",
+    component: ChannelsCreatePage,
+  },
+  {
+    path: "/channels/:id/edit",
+    component: ChannelsEditPage,
+  },
+  // subscriptions
+  {
+    path: "/subscriptions",
+    component: SubscriptionsListPage,
+  },
+  {
+    path: "/subscriptions/:id",
+    component: SubscriptionsViewPage,
+  },
+  {
+    path: "/subscriptions/create",
+    component: SubscriptionsCreatePage,
+  },
+  {
+    path: "/subscriptions/:id/edit",
+    component: SubscriptionsEditPage,
+  },
+  // profiles
   {
     path: "/profile",
     name: "profile",
