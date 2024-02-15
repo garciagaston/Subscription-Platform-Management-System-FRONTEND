@@ -67,10 +67,7 @@
                 :key="channel"
                 class="col-10 order-1 order-md-2"
               >
-                <ChannelDetail
-                  v-if="channel"
-                  :channel="channel"
-                />
+                <ChannelDetail v-if="channel" :channel="channel" />
               </div>
             </div>
           </div>
@@ -96,6 +93,7 @@ export default {
       UserService: UserService,
       moment: moment,
       PackageDetail: PackageDetail,
+      ChannelDetail: ChannelDetail,
     };
   },
   components: {

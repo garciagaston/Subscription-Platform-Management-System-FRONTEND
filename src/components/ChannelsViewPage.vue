@@ -22,73 +22,10 @@
             </div>
             <div class="card-body">
               <div
-                v-if="channelDetail"
+                v-if="channel"
                 class="col-12 col-md-12 col-lg-4 order-1 order-md-2"
               >
-                <h3 class="text-primary">
-                  <i class="fas fa-cube"></i> {{ channelDetail.name }}
-                </h3>
-                <p class="text-muted">
-                  {{ channelDetail.description }}
-                </p>
-                <br />
-                <div class="text-muted">
-                  <p class="text-sm">
-                    Name
-                    <b class="d-block">{{ channelDetail.name }}</b>
-                  </p>
-                  <p class="text-sm">
-                    Description
-                    <b class="d-block">{{ channelDetail.description }}</b>
-                  </p>
-                  <p class="text-sm">
-                    image_url
-                    <b class="d-block">{{ channelDetail.image_url }}</b>
-                  </p>
-                  <p class="text-sm">
-                    lineup_id
-                    <b class="d-block">{{ channelDetail.lineup_id }}</b>
-                  </p>
-                  <p class="text-sm">
-                    call_sign
-                    <b class="d-block">{{ channelDetail.call_sign }}</b>
-                  </p>
-                  <p class="text-sm">
-                    active
-                    <b class="d-block">{{ channelDetail.active }}</b>
-                  </p>
-                  <p class="text-sm">
-                    display_order
-                    <b class="d-block">{{ channelDetail.display_order }}</b>
-                  </p>
-                  <p class="text-sm">
-                    created_at
-                    <b class="d-block">{{
-                      moment
-                        .utc(channelDetail.created_at)
-                        .local()
-                        .format("YYYY-MM-DD HH:mm:ss")
-                    }}</b>
-                  </p>
-                  <p class="text-sm">
-                    updated_at
-                    <b class="d-block">{{
-                      moment
-                        .utc(channelDetail.updated_at)
-                        .local()
-                        .format("YYYY-MM-DD HH:mm:ss")
-                    }}</b>
-                  </p>
-                  <p v-if="channelDetail.deleted_at" class="text-sm">
-                    deleted_at
-                    <b class="d-block">{{
-                      moment
-                        .utc(channelDetail.deleted_at)
-                        .local()
-                        .format("YYYY-MM-DD HH:mm:ss")
-                    }}</b>
-                  </p>
-                </div>
+                <ChannelDetail v-if="channel" :channel="channel" />
               </div>
             </div>
             <div class="card-footer clearfix">
@@ -116,16 +53,21 @@
 import ChannelService from "../services/channels.service.js";
 import UserService from "../services/user.service.js";
 import moment from "moment";
+import ChannelDetail from "./ChannelDetail";
 
 export default {
   name: "ChannelsViewPage",
   data() {
     return {
-      channelDetail: null,
+      channel: null,
       channelId: this.$route.params.id,
       UserService: UserService,
       moment: moment,
+      ChannelDetail: ChannelDetail,
     };
+  },
+  components: {
+    ChannelDetail,
   },
   computed: {
     currentUser() {
@@ -142,9 +84,9 @@ export default {
     getChannel(channelId) {
       let thiss = this;
       ChannelService.getChannel(channelId).then(function (response) {
-        thiss.channelDetail = response.data;
+        thiss.channel = response.data;
       });
-      return thiss.channelDetail;
+      return thiss.channel;
     },
   },
 };
