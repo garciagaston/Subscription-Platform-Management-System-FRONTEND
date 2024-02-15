@@ -1,12 +1,26 @@
 <template>
   <div class="content-header">
-    <h1>Package Detail</h1>
+    <h1>Package</h1>
   </div>
   <div class="content px-2">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12">
-          <div class="card">
+        <div class="col-8">
+          <!-- PACKAGE CARD -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Package Detail</h3>
+              <div class="card-tools">
+                <button
+                  type="button"
+                  class="btn btn-tool"
+                  data-card-widget="collapse"
+                  title="Collapse"
+                >
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
             <div class="card-body">
               <div
                 v-if="packageData"
@@ -31,6 +45,36 @@
             </div>
           </div>
         </div>
+        <div v-if="packageData" class="col-4">
+          <!-- CHANNELS CARD -->
+          <div v-if="packageData.channels" class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">Channels</h3>
+              <div class="card-tools">
+                <button
+                  type="button"
+                  class="btn btn-tool"
+                  data-card-widget="collapse"
+                  title="Collapse"
+                >
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div
+                v-for="channel in packageData.channels"
+                :key="channel"
+                class="col-10 order-1 order-md-2"
+              >
+                <ChannelDetail
+                  v-if="channel"
+                  :channel="channel"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -41,6 +85,7 @@ import PackageService from "../services/packages.service.js";
 import UserService from "../services/user.service.js";
 import moment from "moment";
 import PackageDetail from "./PackageDetail";
+import ChannelDetail from "./ChannelDetail";
 
 export default {
   name: "PackagesViewPage",
@@ -55,6 +100,7 @@ export default {
   },
   components: {
     PackageDetail,
+    ChannelDetail,
   },
   computed: {
     currentUser() {
