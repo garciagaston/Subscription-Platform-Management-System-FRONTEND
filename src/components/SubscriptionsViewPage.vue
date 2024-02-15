@@ -4,8 +4,8 @@
   </div>
   <div class="content px-2">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
+      <div class="row" v-if="subscription">
+        <div class="col-8">
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Subscription Detail</h3>
@@ -47,6 +47,27 @@
             </div>
           </div>
         </div>
+        <div class="col-4">
+          <!-- PACKAGE CARD -->
+          <div v-if="subscription.package" class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">Package</h3>
+              <div class="card-tools">
+                <button
+                  type="button"
+                  class="btn btn-tool"
+                  data-card-widget="collapse"
+                  title="Collapse"
+                >
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+                <PackageDetail :packageData="subscription.package" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -57,11 +78,13 @@ import SubscriptionService from "../services/subscriptions.service.js";
 import UserService from "../services/user.service.js";
 import moment from "moment";
 import SubscriptionDetail from "./SubscriptionDetail";
+import PackageDetail from "./PackageDetail";
 
 export default {
   name: "SubscriptionsViewPage",
   components: {
     SubscriptionDetail,
+    PackageDetail,
   },
   data() {
     return {

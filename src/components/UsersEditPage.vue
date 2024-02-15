@@ -46,10 +46,10 @@ export default {
   methods: {
     getUser(userId) {
       let thiss = this;
-      UserService.getUser(userId).then(function (response) {
+      this.UsersService.getUser(userId).then(function (response) {
         thiss.user = response.data;
       });
-      return thiss.user;
+      return this.user;
     },
     editUser(userForm) {
       this.UsersService.editUser(this.user.id, userForm).then(

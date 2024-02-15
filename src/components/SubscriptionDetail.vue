@@ -33,7 +33,16 @@
     </p>
     <p class="text-sm">
       User ID
-      <b class="d-block">{{ subscription.user_id }}</b>
+      <b class="d-block">
+        <router-link
+          v-if="UserService.can('view packages')"
+          :to="'/users/' + subscription.user_id"
+          class="btn btn-text"
+          ><i class="fas fa-eye"></i> User #{{
+            subscription.user_id
+          }}</router-link
+        >
+      </b>
     </p>
     <p class="text-sm">
       Package ID

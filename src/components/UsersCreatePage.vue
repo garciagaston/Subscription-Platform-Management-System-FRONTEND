@@ -6,7 +6,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <div class="card">
+          <div class="card card-primary">
             <UsersForm @on-submit="createUser" />
           </div>
         </div>

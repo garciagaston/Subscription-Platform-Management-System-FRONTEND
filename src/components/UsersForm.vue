@@ -1,54 +1,67 @@
 <template>
   <Form :validation-schema="schema" @submit="submitHandler">
+    <div class="card-header">
+      <h3 class="card-title">User</h3>
+      <div class="card-tools">
+        <button
+          type="button"
+          class="btn btn-tool"
+          data-card-widget="collapse"
+          title="Collapse"
+        >
+          <i class="fas fa-minus"></i>
+        </button>
+      </div>
+    </div>
     <div class="card-body">
       <div v-if="!successful">
-        <!-- USER_ID -->
+        <!-- NAME -->
         <div class="form-group">
-          <label for="user_id">User Id</label>
+          <label for="name">Name</label>
           <Field
-            v-model="form.user_id"
-            name="user_id"
+            v-model="form.name"
+            name="name"
             type="text"
             class="form-control"
             required
           />
-          <ErrorMessage name="user_id" class="error-feedback" />
+          <ErrorMessage name="name" class="error-feedback" />
         </div>
-        <!-- PACKAGE ID -->
+        <!-- EMAIL -->
         <div class="form-group">
-          <label for="package_id">Package ID</label>
+          <label for="email">Email</label>
           <Field
-            v-model="form.package_id"
-            name="package_id"
-            type="textarea"
+            v-model="form.email"
+            name="email"
+            type="text"
             class="form-control"
             required
           />
-          <ErrorMessage name="package_id" class="error-feedback" />
+          <ErrorMessage name="email" class="error-feedback" />
         </div>
-        <!-- START_DATE -->
+        <!-- PASSWORD -->
         <div class="form-group">
-          <label for="start_date">Start Date</label>
+          <label for="start_date">Password</label>
           <Field
-            v-model="form.start_date"
-            name="start_date"
-            type="date"
+            v-model="form.password"
+            name="password"
+            type="password"
             class="form-control"
             required
           />
-          <ErrorMessage name="start_date" class="error-feedback" />
+          <ErrorMessage name="password" class="error-feedback" />
         </div>
-        <!-- END_DATE -->
+        <!-- PASSWORD CONFIRM -->
         <div class="form-group">
-          <label for="end_date">End Date</label>
+          <label for="password_confirmation">Password Confirm</label>
           <Field
-            v-model="form.end_date"
-            name="end_date"
-            type="date"
+            v-model="form.password_confirmation"
+            name="password_confirmation"
+            type="password"
             class="form-control"
             required
           />
-          <ErrorMessage name="end_date" class="error-feedback" />
+          <ErrorMessage name="password_confirmation" class="error-feedback" />
         </div>
       </div>
       <!-- MESSAGE -->
@@ -99,21 +112,17 @@ export default {
   emits: ["on-submit"],
   data() {
     const schema = yup.object().shape({
-      user_id: yup.number().required("User Id is required!"),
-      package_id: yup.number().required("Package Id is required!"),
-      start_date: yup.date().required("start_date is required!"),
-      end_date: yup.date().required("end_date is required!"),
+      name: yup.string().required("Name is required!"),
+      email: yup.string().required("Email is required!"),
+      password: yup.string().required("Password is required!"),
+      password_confirmation: yup.string().required("Password Confirmation is required!"),
     });
     return {
       form: {
-        user_id: this.user?.user_id || "",
-        package_id: this.user?.package_id || "",
-        start_date: this.user?.start_date
-          ? moment(this.user.start_date).format("YYYY-MM-DD")
-          : "",
-        end_date: this.user?.end_date
-          ? moment(this.user.end_date).format("YYYY-MM-DD")
-          : "",
+        name: this.user?.name || "",
+        email: this.user?.email || "",
+        password: "",
+        password_confirmation: "",
       },
       successful: false,
       loading: false,
