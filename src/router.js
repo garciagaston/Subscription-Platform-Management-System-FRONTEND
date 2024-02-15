@@ -29,6 +29,12 @@ const SubscriptionsCreatePage = () =>
 const SubscriptionsEditPage = () =>
   import("./components/SubscriptionsEditPage.vue");
 
+//users
+const UsersListPage = () => import("./components/UsersListPage.vue");
+const UsersViewPage = () => import("./components/UsersViewPage.vue");
+const UsersCreatePage = () => import("./components/UsersCreatePage.vue");
+const UsersEditPage = () => import("./components/UsersEditPage.vue");
+
 const routes = [
   {
     path: "/",
@@ -97,6 +103,23 @@ const routes = [
   {
     path: "/subscriptions/:id/edit",
     component: SubscriptionsEditPage,
+  },
+  // users
+  {
+    path: "/users",
+    component: UsersListPage,
+  },
+  {
+    path: "/users/:id",
+    component: UsersViewPage,
+  },
+  {
+    path: "/users/create",
+    component: UsersCreatePage,
+  },
+  {
+    path: "/users/:id/edit",
+    component: UsersEditPage,
   },
   // profiles
   {

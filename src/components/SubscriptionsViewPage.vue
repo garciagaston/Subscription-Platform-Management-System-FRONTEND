@@ -12,93 +12,10 @@
                 v-if="subscription"
                 class="col-12 col-md-12 col-lg-4 order-1 order-md-2"
               >
-                <h3 class="text-primary">
-                  <i class="fas fa-tv"></i> Subscription #{{ subscription.id }}
-                </h3>
-                <p class="text-muted">
-                  <b>Subscribed from {{
-                    moment
-                      .utc(subscription.start_date)
-                      .local()
-                      .format("YYYY-MM-DD HH:mm:ss")
-                  }}</b>
-                  to
-                  <b>{{
-                    moment
-                      .utc(subscription.end_date)
-                      .local()
-                      .format("YYYY-MM-DD HH:mm:ss")
-                  }} ({{ moment.duration(moment(subscription.end_date).diff(moment())).days() }} days left)</b>
-                </p>
-                <br />
-                <div class="text-muted">
-                  <p class="text-sm">
-                    Subscription ID
-                    <b class="d-block">{{ subscription.id }}</b>
-                  </p>
-                  <p class="text-sm">
-                    User ID
-                    <b class="d-block">{{ subscription.user_id }}</b>
-                  </p>
-                  <p class="text-sm">
-                    Package ID
-                    <b class="d-block">
-                      <router-link
-                        v-if="UserService.can('view packages')"
-                        :to="'/packages/' + subscription.package_id"
-                        class="btn btn-text"
-                        ><i class="fas fa-eye"></i> Package #{{
-                          subscription.package_id
-                        }}</router-link
-                      >
-                    </b>
-                  </p>
-                  <p class="text-sm">
-                    Start Date
-                    <b class="d-block">{{
-                      moment
-                        .utc(subscription.start_date)
-                        .local()
-                        .format("YYYY-MM-DD HH:mm:ss")
-                    }}</b>
-                  </p>
-                  <p class="text-sm">
-                    End Date
-                    <b class="d-block">{{
-                      moment
-                        .utc(subscription.end_date)
-                        .local()
-                        .format("YYYY-MM-DD HH:mm:ss")
-                    }}</b>
-                  </p>
-                  <p class="text-sm">
-                    Created At
-                    <b class="d-block">{{
-                      moment
-                        .utc(subscription.created_at)
-                        .local()
-                        .format("YYYY-MM-DD HH:mm:ss")
-                    }}</b>
-                  </p>
-                  <p class="text-sm">
-                    Updated At
-                    <b class="d-block">{{
-                      moment
-                        .utc(subscription.updated_at)
-                        .local()
-                        .format("YYYY-MM-DD HH:mm:ss")
-                    }}</b>
-                  </p>
-                  <p v-if="subscription.deleted_at" class="text-sm">
-                    Deleted At
-                    <b class="d-block">{{
-                      moment
-                        .utc(subscription.deleted_at)
-                        .local()
-                        .format("YYYY-MM-DD HH:mm:ss")
-                    }}</b>
-                  </p>
-                </div>
+                <SubscriptionDetail
+                  v-if="subscription"
+                  :subscription="user?.active_subscription"
+                />
               </div>
             </div>
             <div class="card-footer clearfix">
@@ -126,9 +43,13 @@
 import SubscriptionService from "../services/subscriptions.service.js";
 import UserService from "../services/user.service.js";
 import moment from "moment";
+import SubscriptionDetail from "./SubscriptionDetail";
 
 export default {
   name: "SubscriptionsViewPage",
+  components: {
+    SubscriptionDetail,
+  },
   data() {
     return {
       subscription: null,

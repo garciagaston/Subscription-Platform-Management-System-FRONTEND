@@ -68,8 +68,8 @@
       </button>
       <!-- BACK -->
       <router-link
-        v-if="UserService.can('view any subscriptions')"
-        to="/subscriptions"
+        v-if="UserService.can('view any users')"
+        to="/users"
         class="btn btn-text float-right"
         ><i class="fas fa-pencil"></i> Back</router-link
       >
@@ -80,7 +80,7 @@
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
-import SubscriptionService from "../services/subscriptions.service.js";
+import UsersService from "../services/users.service.js";
 import UserService from "../services/user.service.js";
 import moment from "moment";
 
@@ -91,7 +91,7 @@ export default {
     ErrorMessage,
   },
   props: {
-    subscription: {
+    user: {
       type: Object,
       default: () => ({}),
     },
@@ -106,13 +106,13 @@ export default {
     });
     return {
       form: {
-        user_id: this.subscription?.user_id || "",
-        package_id: this.subscription?.package_id || "",
-        start_date: this.subscription?.start_date
-          ? moment(this.subscription.start_date).format("YYYY-MM-DD")
+        user_id: this.user?.user_id || "",
+        package_id: this.user?.package_id || "",
+        start_date: this.user?.start_date
+          ? moment(this.user.start_date).format("YYYY-MM-DD")
           : "",
-        end_date: this.subscription?.end_date
-          ? moment(this.subscription.end_date).format("YYYY-MM-DD")
+        end_date: this.user?.end_date
+          ? moment(this.user.end_date).format("YYYY-MM-DD")
           : "",
       },
       successful: false,
@@ -120,7 +120,7 @@ export default {
       message: "",
       schema,
       UserService: UserService,
-      SubscriptionService: SubscriptionService,
+      UsersService: UsersService,
       moment: moment,
     };
   },

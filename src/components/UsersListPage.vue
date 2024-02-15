@@ -2,14 +2,14 @@
   <div class="content-header">
     <div class="row">
       <div class="col-6">
-        <h1>Subscriptions</h1>
+        <h1>Users</h1>
       </div>
       <div class="col-6">
         <router-link
-          v-if="UserService.can('create subscriptions')"
-          to="/subscriptions/create"
+          v-if="UserService.can('create users')"
+          to="/users/create"
           class="btn btn-primary btn-flat float-right"
-          >Create subscription</router-link
+          >Create user</router-link
         >
       </div>
     </div>
@@ -18,7 +18,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <div v-if="subscriptions.data" class="card">
+          <div v-if="users.data" class="card">
             <div class="card-body">
               <div class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
@@ -33,7 +33,7 @@
                           <th
                             class="sorting sorting_asc"
                             tabindex="0"
-                            aria-controls="subscriptions"
+                            aria-controls="users"
                             rowspan="1"
                             colspan="1"
                             aria-sort="ascending"
@@ -44,58 +44,38 @@
                           <th
                             class="sorting sorting_asc"
                             tabindex="0"
-                            aria-controls="subscriptions"
+                            aria-controls="users"
                             rowspan="1"
                             colspan="1"
                             aria-sort="ascending"
                             aria-label="Rendering engine: activate to sort column descending"
                           >
-                            User Id
+                            Name
                           </th>
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="subscriptions"
+                            aria-controls="users"
                             rowspan="1"
                             colspan="1"
                             aria-label="Browser: activate to sort column ascending"
                           >
-                            Package Id
+                            Email
                           </th>
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="subscriptions"
+                            aria-controls="users"
                             rowspan="1"
                             colspan="1"
-                            aria-label="Platform(s): activate to sort column ascending"
+                            aria-label="Browser: activate to sort column ascending"
                           >
-                            Start Date
+                            Active Subscription
                           </th>
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="subscriptions"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="Platform(s): activate to sort column ascending"
-                          >
-                            End Date
-                          </th>
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="subscriptions"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="CSS grade: activate to sort column ascending"
-                          >
-                            Active
-                          </th>
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="subscriptions"
+                            aria-controls="users"
                             rowspan="1"
                             colspan="1"
                             aria-label="CSS grade: activate to sort column ascending"
@@ -105,7 +85,7 @@
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="subscriptions"
+                            aria-controls="users"
                             rowspan="1"
                             colspan="1"
                             aria-label="CSS grade: activate to sort column ascending"
@@ -115,7 +95,7 @@
                           <th
                             class="sorting"
                             tabindex="0"
-                            aria-controls="subscriptions"
+                            aria-controls="users"
                             rowspan="1"
                             colspan="1"
                             aria-label="CSS grade: activate to sort column ascending"
@@ -127,59 +107,46 @@
                       <!-- TABLE BODY -->
                       <tbody>
                         <tr
-                          v-for="(subscription, index) in subscriptions.data"
-                          :key="subscription"
+                          v-for="(user, index) in users.data"
+                          :key="user"
                           :class="{
                             even: index % 2 === 0,
                             odd: index % 2 !== 0,
                           }"
                         >
                           <td>
-                            {{ subscription.id }}
+                            {{ user.id }}
                           </td>
                           <td>
-                            {{ subscription.user_id }}
+                            {{ user.name }}
+                          </td>
+                          <td>{{ user.email }}</td>
+                          <td>{{ user.active_subscription !== null }}</td>
+                          <td>
+                            {{ moment.utc(user.created_at).fromNow() }}
                           </td>
                           <td>
-                            <router-link
-                              v-if="UserService.can('view packages')"
-                              :to="'/packages/' + subscription.package_id"
-                              class="btn btn-text"
-                              ><i class="fas fa-eye"></i> Package #{{
-                                subscription.package_id
-                              }}</router-link
-                            >
-                          </td>
-                          <td>{{ subscription.start_date }}</td>
-                          <td>{{ subscription.end_date }}</td>
-                          <td>{{ subscription.active }}</td>
-                          <td>
-                            {{ moment.utc(subscription.created_at).fromNow() }}
-                          </td>
-                          <td>
-                            {{ moment.utc(subscription.updated_at).fromNow() }}
+                            {{ moment.utc(user.updated_at).fromNow() }}
                           </td>
                           <td>
                             <router-link
-                              v-if="UserService.can('view any subscriptions')"
-                              :to="'/subscriptions/' + subscription.id"
+                              v-if="UserService.can('view any users')"
+                              :to="'/users/' + user.id"
                               class="btn btn-secondary btn-flat mr-1"
                               >View</router-link
                             >
                             <router-link
-                              v-if="UserService.can('edit subscriptions')"
-                              :to="
-                                '/subscriptions/' + subscription.id + '/edit'
-                              "
+                              v-if="UserService.can('edit users')"
+                              :to="'/users/' + user.id + '/edit'"
                               class="btn btn-secondary btn-flat mr-1"
                             >
                               Edit
                             </router-link>
                             <button
-                              v-if="UserService.can('delete subscriptions')"
+                              v-if="UserService.can('delete users')"
                               type="button"
                               class="btn btn-danger btn-flat"
-                              @click="deleteSubscription(subscription.id)"
+                              @click="deleteUser(user.id)"
                             >
                               Delete
                             </button>
@@ -196,9 +163,8 @@
                           role="status"
                           aria-live="polite"
                         >
-                          Showing {{ subscriptions.meta.from }} to
-                          {{ subscriptions.meta.to }} of
-                          {{ subscriptions.meta.total }} entries
+                          Showing {{ users.meta.from }} to
+                          {{ users.meta.to }} of {{ users.meta.total }} entries
                         </div>
                       </div>
                       <!-- TABLE PAGINATION -->
@@ -212,23 +178,21 @@
                               id="datatable_previous"
                               class="paginate_button page-item previous"
                               :class="{
-                                disabled: subscriptions.links.prev === null,
+                                disabled: users.links.prev === null,
                               }"
                             >
                               <button
                                 type="button"
                                 :class="{
-                                  disabled: subscriptions.links.prev === null,
+                                  disabled: users.links.prev === null,
                                 }"
                                 aria-controls="datatable"
-                                :data-dt-idx="
-                                  subscriptions.meta.current_page - 1
-                                "
-                                :tabindex="subscriptions.meta.current_page - 1"
+                                :data-dt-idx="users.meta.current_page - 1"
+                                :tabindex="users.meta.current_page - 1"
                                 class="page-link"
                                 @click="
-                                  getAllSubscriptions(
-                                    subscriptions.meta.current_page - 1,
+                                  getAllUsers(
+                                    users.meta.current_page - 1,
                                     perPage,
                                   )
                                 "
@@ -237,12 +201,11 @@
                               </button>
                             </li>
                             <li
-                              v-for="index in subscriptions.meta.last_page"
+                              v-for="index in users.meta.last_page"
                               :key="index"
                               class="paginate_button page-item"
                               :class="{
-                                active:
-                                  index == subscriptions.meta.current_page,
+                                active: index == users.meta.current_page,
                               }"
                             >
                               <button
@@ -251,7 +214,7 @@
                                 :data-dt-idx="index"
                                 :tabindex="index"
                                 class="page-link"
-                                @click="getAllSubscriptions(index, perPage)"
+                                @click="getAllUsers(index, perPage)"
                               >
                                 {{ index }}
                               </button>
@@ -260,23 +223,21 @@
                               id="datatable_next"
                               class="paginate_button page-item next"
                               :class="{
-                                disabled: subscriptions.links.next === null,
+                                disabled: users.links.next === null,
                               }"
                             >
                               <button
                                 type="button"
                                 :class="{
-                                  disabled: subscriptions.links.next === null,
+                                  disabled: users.links.next === null,
                                 }"
                                 aria-controls="pagination"
-                                :data-dt-idx="
-                                  subscriptions.meta.current_page + 1
-                                "
-                                :tabindex="subscriptions.meta.current_page + 1"
+                                :data-dt-idx="users.meta.current_page + 1"
+                                :tabindex="users.meta.current_page + 1"
                                 class="page-link"
                                 @click="
-                                  getAllSubscriptions(
-                                    subscriptions.meta.current_page + 1,
+                                  getAllUsers(
+                                    users.meta.current_page + 1,
                                     perPage,
                                   )
                                 "
@@ -296,10 +257,7 @@
                             aria-controls="pagination"
                             class="form-select form-select-sm"
                             @change="
-                              getAllSubscriptions(
-                                PAGE_DEFAULT,
-                                $event.target.value,
-                              )
+                              getAllUsers(PAGE_DEFAULT, $event.target.value)
                             "
                           >
                             <option
@@ -327,7 +285,7 @@
 </template>
 
 <script>
-import SubscriptionService from "../services/subscriptions.service.js";
+import UsersService from "../services/users.service.js";
 import UserService from "../services/user.service.js";
 import { useRoute } from "vue-router";
 import moment from "moment";
@@ -336,16 +294,17 @@ const PER_PAGE_DEFAULT = 20;
 const PAGE_DEFAULT = 1;
 
 export default {
-  name: "SubscriptionsListPage",
+  name: "UsersListPage",
   data() {
     return {
-      subscriptions: [],
+      users: [],
       perPage: PER_PAGE_DEFAULT,
       page: PAGE_DEFAULT,
       perPages: [10, 20, 40, 100],
       PAGE_DEFAULT: PAGE_DEFAULT,
       PER_PAGE_DEFAULT: PER_PAGE_DEFAULT,
       UserService: UserService,
+      UsersService: UsersService,
       moment: moment,
     };
   },
@@ -355,16 +314,16 @@ export default {
     },
   },
   mounted() {
-    if (!this.currentUser || !UserService.can("view any subscriptions")) {
+    if (!this.currentUser || !UserService.can("view any users")) {
       this.$router.push("/login");
     }
     const route = useRoute();
     this.perPage = route.query.per_page ?? PER_PAGE_DEFAULT;
     this.page = route.query.page ?? PAGE_DEFAULT;
-    this.getAllSubscriptions(this.page, this.perPage);
+    this.getAllUsers(this.page, this.perPage);
   },
   methods: {
-    getAllSubscriptions(page, perPage) {
+    getAllUsers(page, perPage) {
       this.$router.push({
         path: this.$route.path,
         query: { page: page, per_page: perPage },
@@ -372,23 +331,17 @@ export default {
       this.page = page;
       this.perPage = perPage;
       let thiss = this;
-      SubscriptionService.getAll(page, perPage).then(function (response) {
-        thiss.subscriptions = response;
+      UsersService.getAll(page, perPage).then(function (response) {
+        thiss.users = response;
       });
-      return thiss.subscriptions;
+      return thiss.users;
     },
-    deleteSubscription(subscriptionId) {
+    deleteUser(userId) {
       let thiss = this;
-      if (
-        confirm(
-          "Do you really want to delete subscription #" + subscriptionId + "?",
-        )
-      ) {
-        SubscriptionService.deleteSubscription(subscriptionId).then(
-          function () {
-            thiss.getAllSubscriptions(thiss.page, thiss.perPage);
-          },
-        );
+      if (confirm("Do you really want to delete user #" + userId + "?")) {
+        UsersService.deleteUser(userId).then(function () {
+          thiss.getAllUsers(thiss.page, thiss.perPage);
+        });
       }
     },
   },
