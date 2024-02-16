@@ -131,18 +131,21 @@
                           <td>
                             <router-link
                               v-if="UserService.can('view any users')"
+                              :id="'view-' + user.id"
                               :to="'/users/' + user.id"
                               class="btn btn-secondary btn-flat mr-1"
                               >View</router-link
                             >
                             <router-link
                               v-if="UserService.can('edit users')"
+                              :id="'edit-' + user.id"
                               :to="'/users/' + user.id + '/edit'"
                               class="btn btn-secondary btn-flat mr-1"
                             >
                               Edit
                             </router-link>
                             <button
+                              :id="'delete-' + user.id"
                               v-if="UserService.can('delete users')"
                               type="button"
                               class="btn btn-danger btn-flat"

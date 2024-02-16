@@ -138,7 +138,13 @@
                             {{ subscription.id }}
                           </td>
                           <td>
-                            {{ subscription.user_id }}
+                            <router-link
+                            v-if="UserService.can('view users')"
+                            :to="'/users/' + subscription.user_id"
+                            class="btn btn-text"
+                            ><i class="fas fa-eye"></i> User #{{
+                              subscription.user_id
+                            }}</router-link>
                           </td>
                           <td>
                             <router-link
