@@ -10,7 +10,8 @@
     "coverage": "jest --collect-coverage",
     "format": "prettier .  --write",
     "test": "jest",
-    "test-watch": "jest --watchAll"
+    "test-watch": "jest --watchAll",
+    "start": "vue-cli-service serve"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -78,5 +79,8 @@
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ]
+  ],
+  "engines": {
+    "node": "20.x"
+  }
 }
