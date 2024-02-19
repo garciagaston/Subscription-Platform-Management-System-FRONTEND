@@ -10,9 +10,7 @@
     "coverage": "jest --collect-coverage",
     "format": "prettier .  --write",
     "test": "jest",
-    "test-watch": "jest --watchAll",
-    "postinstall": "npm run build",
-    "start": "node server.js"
+    "test-watch": "jest --watchAll"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -22,11 +20,9 @@
     "axios": "^1.6.7",
     "bootstrap": "^4.6.2",
     "core-js": "^3.8.3",
-    "express": "^4.18.2",
     "jquery": "^3.7.1",
     "moment": "^2.30.1",
     "popper.js": "^1.16.1",
-    "serve-static": "^1.15.0",
     "vee-validate": "^4.12.5",
     "vue": "^3.2.13",
     "vue-router": "^4.2.5",
