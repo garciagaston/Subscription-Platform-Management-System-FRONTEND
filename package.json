@@ -11,8 +11,7 @@
     "format": "prettier .  --write",
     "test": "jest",
     "test-watch": "jest --watchAll",
-    "postinstall": "npm run build",
-    "start": "node server.js"
+    "start": "vue-cli-service serve"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
