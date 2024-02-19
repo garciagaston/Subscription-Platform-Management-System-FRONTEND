@@ -65,3 +65,6 @@ npm run coverage
 ```
 npm run test-watch
 ```
+
+## Dashboard documentation
+https://adminlte.io/themes/v3/index.html
